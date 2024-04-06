@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "lib": ["dom", "es2015", "es2017"]
+  },
+  "include": ["src/**/*.ts"]
+}
