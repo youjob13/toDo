@@ -6,7 +6,7 @@ export enum TodoActions {
   DELETE_TODO = "DELETE_TODO",
 }
 
-interface ITodoState {
+export interface ITodoState {
   todos: string[];
 }
 

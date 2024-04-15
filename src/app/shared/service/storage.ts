@@ -1,4 +1,6 @@
-export default class StorageService implements Storage {
+import type { IStorage } from "../models/IStorage";
+
+export default class StorageService implements IStorage {
   public get length(): number {
     return localStorage.length;
   }

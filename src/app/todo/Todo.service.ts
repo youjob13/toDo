@@ -1,9 +1,9 @@
-import StorageService from "../shared/service/storage";
+import { container } from "tsyringe";
+import { InjectionToken } from "../common/injectionTokens";
 
 export default class TodoService {
   private readonly key = "todos";
-
-  constructor(private storage: StorageService) {}
+  private readonly storage = container.resolve(InjectionToken.STORAGE);
 
   public save(todos: string[]): Promise<void> {
     return Promise.resolve(this.storage.setItem(this.key, todos));

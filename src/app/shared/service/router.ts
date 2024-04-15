@@ -1,11 +1,11 @@
 export type Route = {
   route: string;
-  callback: () => void;
+  callback: () => HTMLElement;
   isDefaultRoute?: boolean;
 };
 
 export default class Router {
-  private routes: Record<string, () => void> = {};
+  private routes: Record<Route["route"], Route["callback"]> = {};
 
   constructor() {
     document.addEventListener("click", (event) => {
@@ -23,12 +23,12 @@ export default class Router {
     window.dispatchEvent(new PopStateEvent("popstate", {}));
   }
 
-  public initRouter(routes: Route[]) {
+  public initRouter(routes: Route[], notifier: (page: HTMLElement) => void) {
     this.addRoutes(routes);
 
-    window.addEventListener("popstate", this.changePage.bind(this));
+    window.addEventListener("popstate", this.changePage.bind(this, notifier));
 
-    this.changePage();
+    this.changePage(notifier);
   }
 
   private addRoutes(routes: Route[]) {
@@ -44,10 +44,10 @@ export default class Router {
     }
   }
 
-  private changePage() {
+  private changePage(notifier: (page: HTMLElement) => void) {
     const path = window.location.pathname;
     if (this.routes[path]) {
-      this.routes[path]();
+      notifier(this.routes[path]());
     }
   }
 }

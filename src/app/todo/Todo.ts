@@ -1,18 +1,19 @@
+import { container, singleton } from "tsyringe";
 import { BaseElement } from "../shared/helpers/BaseElement";
-import StorageService from "../shared/service/storage";
 import TodoService from "./Todo.service";
-import { TodoActions, todoStore } from "./Todo.state";
+import { TodoActions } from "./Todo.state";
 import Form from "./form/Form";
 import TodoList from "./todoList/TodoList";
+import { InjectionToken } from "../common/injectionTokens";
 
 export class Todo extends BaseElement<HTMLDivElement> {
   private todoService: TodoService;
-  private todoStore = todoStore;
+  private readonly todoStore = container.resolve(InjectionToken.TODO_STORE);
 
-  constructor(storage: StorageService) {
+  constructor() {
     super({ tag: "div", class: "todo" });
 
-    this.todoService = new TodoService(storage);
+    this.todoService = new TodoService();
     this.init();
   }
 
